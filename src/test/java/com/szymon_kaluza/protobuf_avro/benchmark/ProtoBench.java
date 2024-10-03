@@ -20,8 +20,8 @@ public class ProtoBench {
     @Fork(3)
     @Measurement(iterations = 100, time = 3)
     @BenchmarkMode(Mode.Throughput)
-    public void serializeSmallThroughput(SmallLibrary input) {
-        protoLibraryService.serialize(input.library);
+    public void serializeSmallThroughput(SmallLibrary input, Blackhole blackhole) {
+        blackhole.consume(protoLibraryService.serialize(input.library));
     }
 
     @Benchmark
@@ -29,8 +29,8 @@ public class ProtoBench {
     @Fork(3)
     @Measurement(iterations = 100, time = 3)
     @BenchmarkMode(Mode.Throughput)
-    public void serializeBigThroughput(BigLibrary input) {
-        protoLibraryService.serialize(input.library);
+    public void serializeBigThroughput(BigLibrary input, Blackhole blackhole) {
+        blackhole.consume(protoLibraryService.serialize(input.library));
     }
 
     @Benchmark

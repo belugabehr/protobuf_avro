@@ -6,6 +6,7 @@ import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.List;
+import java.util.Random;
 
 import static com.szymon_kaluza.protobuf_avro.benchmark.AvroBenchmarkDataFactory.*;
 
@@ -19,8 +20,8 @@ public class AvroBench {
     @Fork(3)
     @Measurement(iterations = 100, time = 3)
     @BenchmarkMode(Mode.Throughput)
-    public void serializeSmall(SmallLibrary input) {
-        libraryService.serialize(input.library);
+    public void serializeSmall(SmallLibrary input, Blackhole blackhole) {
+        blackhole.consume(libraryService.serialize(input.library));
     }
 
     @Benchmark
@@ -28,8 +29,8 @@ public class AvroBench {
     @Fork(3)
     @Measurement(iterations = 100, time = 3)
     @BenchmarkMode(Mode.Throughput)
-    public void serializeBig(BigLibrary input) {
-        libraryService.serialize(input.library);
+    public void serializeBig(BigLibrary input, Blackhole blackhole) {
+        blackhole.consume(libraryService.serialize(input.library));
     }
 
     @Benchmark
@@ -63,6 +64,7 @@ public class AvroBench {
 
     @State(Scope.Benchmark)
     public static class SmallLibrary {
+        private static final Random RANDOM = new Random(BenchmarkRunner.RANDOM_SEED);
         public Library library;
 
         @Setup(Level.Invocation)

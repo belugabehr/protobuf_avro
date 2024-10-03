@@ -9,6 +9,8 @@ import org.openjdk.jmh.runner.options.VerboseMode;
 
 public class BenchmarkRunner {
 
+    public static final long RANDOM_SEED = 13L;
+
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
                 .include(ProtoBench.class.getSimpleName())

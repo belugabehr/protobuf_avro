@@ -15,9 +15,9 @@ public class AvroLibraryService {
 
     public byte[] serialize(Library library) {
         SpecificDatumWriter<Library> writer = new SpecificDatumWriter<>(Library.class);
-        byte[] data = new byte[0];
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream(1024);
         Encoder encoder;
+        byte[] data = null;
         try {
             encoder = EncoderFactory.get().binaryEncoder(stream, null);
             writer.write(library, encoder);
