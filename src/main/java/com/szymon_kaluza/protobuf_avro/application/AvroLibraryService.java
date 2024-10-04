@@ -19,7 +19,7 @@ public class AvroLibraryService {
         Encoder encoder;
         byte[] data = null;
         try {
-            encoder = EncoderFactory.get().binaryEncoder(stream, null);
+            encoder = EncoderFactory.get().directBinaryEncoder(stream, null);
             writer.write(library, encoder);
             encoder.flush();
             data = stream.toByteArray();
